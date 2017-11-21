@@ -1,6 +1,25 @@
 composer.phar
 /vendor/
+/phpunit-6.2.phar
+/test-config.php
 
-# Commit your application's lock file http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file
-# You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
-# composer.lock
+#Apple stuff
+.DS_Store
+
+# User-specific stuff:
+.idea/
+*.iml
+/deploy.sh
+
+# Sensitive or high-churn files:
+.idea/**/dataSources/
+.idea/**/dataSources.ids
+.idea/**/dataSources.xml
+.idea/**/dataSources.local.xml
+.idea/**/sqlDataSources.xml
+.idea/**/dynamic.xml
+.idea/**/uiDesigner.xml
+
+# IntelliJ
+/out/
+
