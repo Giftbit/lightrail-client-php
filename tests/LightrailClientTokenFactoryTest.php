@@ -11,16 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class LightrailClientTokenFactoryTest extends TestCase
 {
-
-    public function testEnvVarsSet()
-    {
-        $this->assertNotEmpty(getEnv("LIGHTRAIL_API_KEY"));
-        $this->assertNotEmpty(getEnv("LIGHTRAIL_SHARED_SECRET"));
-        $this->assertNotEmpty(getEnv("CONTACT_ID"));
-        $this->assertNotEmpty(getEnv("SHOPPER_ID"));
-    }
-
-    public function testJWT()
+	public function testJWT()
     {
         Lightrail::$apiKey = getEnv("LIGHTRAIL_API_KEY");
         Lightrail::$sharedSecret = getEnv("LIGHTRAIL_SHARED_SECRET");
