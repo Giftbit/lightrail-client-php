@@ -7,7 +7,8 @@
     "firebase/php-jwt": "^5.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "5.7.x-dev"
+    "phpunit/phpunit": "5.7.x-dev",
+    "vlucas/phpdotenv": "^2.5@dev"
   },
   "license": "MIT",
   "authors": [
@@ -16,5 +17,8 @@
       "email": "tana.j@lightrail.com"
     }
   ],
-  "minimum-stability": "dev"
+  "minimum-stability": "dev",
+  "scripts": {
+    "test": "phpunit"
+  }
 }

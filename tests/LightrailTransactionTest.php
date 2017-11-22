@@ -2,18 +2,20 @@
 
 namespace Lightrail;
 
-require_once '../test-config.php';
-require_once '../init.php';
+require_once __DIR__ . '/../init.php';
+
+$dotenv = new \Dotenv\Dotenv(__DIR__ . "/..");
+$dotenv->load();
 
 use PHPUnit\Framework\TestCase;
 
 class LightrailTransactionTest extends TestCase {
 	public static function setUpBeforeClass() {
-		Lightrail::$apiKey = TestConfig::$apiKey;
+		Lightrail::$apiKey = getEnv("LIGHTRAIL_API_KEY");
 	}
 
 	public function testSimulateByShopperId() {
-		Lightrail::$apiKey = TestConfig::$apiKey;
+		Lightrail::$apiKey = getEnv("LIGHTRAIL_API_KEY");
 		$params            = $this->getBasicParams();
 		$transaction       = LightrailTransaction::simulate( $params );
 		$this->assertEquals( 'DRAWDOWN', $transaction->transactionType );
@@ -24,7 +26,7 @@ class LightrailTransactionTest extends TestCase {
 		return array(
 			'value'     => - 1,
 			'currency'  => "USD",
-			'shopperId' => TestConfig::$shopperId,
+			'shopperId' => getEnv("SHOPPER_ID"),
 		);
 	}
 

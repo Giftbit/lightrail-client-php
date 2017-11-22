@@ -2,23 +2,32 @@
 
 namespace Lightrail;
 
-require_once '../test-config.php';
-require_once '../init.php';
-require_once '../vendor/autoload.php';
+require_once __DIR__ . '/../init.php';
+
+$dotenv = new \Dotenv\Dotenv(__DIR__ . "/..");
+$dotenv->load();
 
 use PHPUnit\Framework\TestCase;
 
 class LightrailClientTokenFactoryTest extends TestCase
 {
 
+    public function testEnvVarsSet()
+    {
+        $this->assertNotEmpty(getEnv("LIGHTRAIL_API_KEY"));
+        $this->assertNotEmpty(getEnv("LIGHTRAIL_SHARED_SECRET"));
+        $this->assertNotEmpty(getEnv("CONTACT_ID"));
+        $this->assertNotEmpty(getEnv("SHOPPER_ID"));
+    }
+
     public function testJWT()
     {
-        Lightrail::$apiKey = TestConfig::$apiKey;
-        Lightrail::$sharedSecret = TestConfig::$lightrailSharedSecret;
+        Lightrail::$apiKey = getEnv("LIGHTRAIL_API_KEY");
+        Lightrail::$sharedSecret = getEnv("LIGHTRAIL_SHARED_SECRET");
 
-        $token = LightrailClientTokenFactory::generate(TestConfig::$shopperId, 10000);
-        $decoded = \Firebase\JWT\JWT::decode($token, TestConfig::$lightrailSharedSecret, array('HS256'));
-        $this->assertEquals(TestConfig::$shopperId, $decoded->g->shi);
+        $token = LightrailClientTokenFactory::generate(getEnv("SHOPPER_ID"), 10000);
+        $decoded = \Firebase\JWT\JWT::decode($token, getEnv("LIGHTRAIL_SHARED_SECRET"), array('HS256'));
+        $this->assertEquals(getEnv("SHOPPER_ID"), $decoded->g->shi);
     }
 
 }
