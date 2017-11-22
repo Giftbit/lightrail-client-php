@@ -22,7 +22,7 @@ class LightrailTransaction extends LightrailObject {
 	}
 
 	public static function create( $params, $simulate = false ) {
-		Lightrail::checkParams( $params );
+		Lightrail::checkApiKey();
 		if ( $simulate ) {
 			$endpoint = Lightrail::$API_BASE . self::$DRYRUN_ENDPOINT;
 		} else {

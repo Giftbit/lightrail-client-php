@@ -16,7 +16,7 @@ class Lightrail {
 		self::$apiKey = $theApiKey;
 	}
 
-	public static function checkParams( $params ) {
+	public static function checkApiKey() {
 		if ( ! isset( self::$apiKey ) ) {
 			throw new BadParameterException( 'Lightrail::$apiKey not set.' );
 		}
