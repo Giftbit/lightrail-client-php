@@ -9,9 +9,11 @@ $dotenv->load();
 use PHPUnit\Framework\TestCase;
 
 class LightrailContactTest extends TestCase {
+	public static function setUpBeforeClass() {
+		Lightrail::$apiKey = getEnv( "LIGHTRAIL_API_KEY" );
+	}
 
 	public function testRetrieve() {
-		Lightrail::$apiKey  = getEnv( "LIGHTRAIL_API_KEY" );
 		$contactById        = LightrailContact::retrieveByContactId( getEnv( "CONTACT_ID" ) );
 		$contactByShopperId = LightrailContact::retrieveByShopperId( getEnv( "SHOPPER_ID" ) );
 		$this->assertEquals( getEnv( "CONTACT_ID" ), $contactByShopperId->contactId );
@@ -23,4 +25,21 @@ class LightrailContactTest extends TestCase {
 		$this->assertEquals( $cardFromContactId->cardId, $cardFromShopperId->cardId );
 	}
 
+	public function testCreateWithUserSuppliedId() {
+		$params  = array( 'userSuppliedId' => uniqid() );
+		$contact = LightrailContact::create( $params );
+		$this->assertEquals( $params['userSuppliedId'], $contact->userSuppliedId );
+	}
+
+	public function testCreateWithShopperId() {
+		$params  = array( 'shopperId' => uniqid() );
+		$contact = LightrailContact::create( $params );
+		$this->assertEquals( $params['shopperId'], $contact->userSuppliedId );
+	}
+
+	public function testCreateWithUserSuppliedIdAndShopperId() {
+		$params = array( 'shopperId' => uniqid(), 'userSuppliedId' => uniqid() );
+		$this->expectException( BadParameterException::class );
+		LightrailContact::create( $params );
+	}
 }

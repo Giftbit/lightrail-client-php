@@ -4,13 +4,25 @@ namespace Lightrail;
 
 class LightrailContact extends LightrailObject {
 	private static $JSON_ROOT_NAME = 'contact';
+	private static $CONTACTS_ENDPOINT = 'contacts';
 	private static $RETRIEVE_ENDPOINT = 'contacts/%s';
 	private static $RETRIEVE_BY_SHOPPER_ID_ENDPOINT = 'contacts/?userSuppliedId=%s';
 	private static $RETRIEVE_ACCOUNT_CARD_FOR_CURRENCY = 'cards?contactId=%s&cardType=ACCOUNT_CARD&currency=%s';
 
 
 	public static function create( $params ) {
-		//... all optional: userSuppliedId / shopperId, email, fname, lname
+		Lightrail::checkContactParams( $params );
+
+		if ( isset( $params['userSuppliedId'] ) && isset( $params['shopperId'] ) && ( $params['userSuppliedId'] != $params['shopperId'] ) ) {
+			throw new BadParameterException( 'Could not create contact: shopperId and userSuppliedId set to different values' );
+		} elseif ( ! isset( $params['userSuppliedId'] ) && isset( $params['shopperId'] ) ) {
+			$params['userSuppliedId'] = $params['shopperId'];
+		}
+
+		$endpoint = Lightrail::$API_BASE . self::$CONTACTS_ENDPOINT;
+		$response = json_decode( LightrailAPICall::post( $endpoint, $params ), true );
+
+		return new LightrailCard( $response, self::$JSON_ROOT_NAME );
 	}
 
 	public static function retrieveByContactId( $contactId ) {

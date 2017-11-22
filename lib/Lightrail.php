@@ -60,4 +60,11 @@ class Lightrail {
 		}
 	}
 
+	public static function checkContactParams( $params ) {
+		self::checkApiKey();
+		if ( ( ! isset( $params['shopperId'] ) ) && ( ! isset( $params['userSuppliedId'] ) ) ) {
+			throw new BadParameterException( 'Must provide one of shopperId or userSuppliedId' );
+		}
+	}
+
 }
