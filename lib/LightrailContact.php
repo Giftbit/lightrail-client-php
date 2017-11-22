@@ -6,7 +6,7 @@ class LightrailContact extends LightrailObject {
 	private static $JSON_ROOT_NAME = 'contact';
 	private static $RETRIEVE_ENDPOINT = 'contacts/%s';
 	private static $RETRIEVE_BY_SHOPPER_ID_ENDPOINT = 'contacts/?userSuppliedId=%s';
-	private static $RETRIEVE_CONTACT_CARD_FOR_CURRENCY = 'cards?contactId=%s&cardType=ACCOUNT_CARD&currency=%s';
+	private static $RETRIEVE_ACCOUNT_CARD_FOR_CURRENCY = 'cards?contactId=%s&cardType=ACCOUNT_CARD&currency=%s';
 
 
 	public static function create( $params ) {
@@ -33,7 +33,7 @@ class LightrailContact extends LightrailObject {
 	}
 
 	public function retrieveContactCardForCurrency( $currency ) {
-		$endpoint = sprintf( Lightrail::$API_BASE . self::$RETRIEVE_CONTACT_CARD_FOR_CURRENCY, $this->contactId, $currency );
+		$endpoint = sprintf( Lightrail::$API_BASE . self::$RETRIEVE_ACCOUNT_CARD_FOR_CURRENCY, $this->contactId, $currency );
 		$response = json_decode( LightrailAPICall::get( $endpoint ), true );
 		if ( isset( $response['cards'][0] ) ) {
 			$response = $response['cards'][0];
