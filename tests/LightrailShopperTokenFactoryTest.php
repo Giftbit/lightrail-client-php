@@ -11,7 +11,8 @@ use PHPUnit\Framework\TestCase;
 
 class LightrailShopperTokenFactoryTest extends TestCase {
 
-	public function testSignsShopperId() {
+	public function testSignsShopperId()
+    {
 		Lightrail::$apiKey       = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8";
 		Lightrail::$sharedSecret = "secret";
 
@@ -26,7 +27,8 @@ class LightrailShopperTokenFactoryTest extends TestCase {
 		$this->assertEquals( $shopperPayload->iat + 600, $shopperPayload->exp, "exp = iat + 600" );
 	}
 
-    public function testSignsContactUserSuppliedId() {
+    public function testSignsContactUserSuppliedId()
+    {
         Lightrail::$apiKey       = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8";
         Lightrail::$sharedSecret = "secret";
 
@@ -41,7 +43,8 @@ class LightrailShopperTokenFactoryTest extends TestCase {
         $this->assertEquals( $shopperPayload->iat + 600, $shopperPayload->exp, "exp = iat + 600" );
     }
 
-    public function testSignsContactId() {
+    public function testSignsContactId()
+    {
         Lightrail::$apiKey       = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8";
         Lightrail::$sharedSecret = "secret";
 
