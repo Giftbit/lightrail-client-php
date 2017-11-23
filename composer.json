@@ -1,20 +1,29 @@
 {
-    "name": "lightrail/lightrail-client",
-    "description": "Client library for the Lightrail API (www.lightrail.com)",
-    "type": "library",
-    "require": {
-        "php": "5.5",
-        "firebase/php-jwt": "5.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "6.2"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Lightrail Integration Team",
-            "email": "tana.j@lightrail.com"
-        }
-    ],
-    "minimum-stability": "dev"
+  "name": "lightrail/lightrail-client",
+  "description": "Client library for the Lightrail API (www.lightrail.com)",
+  "type": "library",
+  "require": {
+    "php": ">=5.5",
+    "firebase/php-jwt": "^5.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "5.7.x-dev",
+    "vlucas/phpdotenv": "^2.5@dev"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Lightrail Integration Team",
+      "email": "tana.j@lightrail.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "Lightrail\\": "lib/"
+    }
+  },
+  "scripts": {
+    "test": "phpunit"
+  }
 }
