@@ -25,18 +25,7 @@ class LightrailObject
 
     private function createProperty($name, $value)
     {
-        $this->properties[$name] = is_array($value) ? $this->createComplexProperty($value)
-            : $this->createSimpleProperty($value);
-    }
-
-    private function createComplexProperty($value = array())
-    {
-        return new LightrailObject($value);
-    }
-
-    private function createSimpleProperty($value)
-    {
-        return $value;
+        $this->properties[$name] = $value;
     }
 
     public function __get($name)

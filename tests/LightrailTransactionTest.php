@@ -90,11 +90,22 @@ class LightrailTransactionTest extends TestCase
         $voidedTransaction = $transaction->void();
         $this->assertEquals('PENDING_VOID', $voidedTransaction->transactionType);
 
-        $transaction = LightrailTransaction::createPending($params);
+        $transaction        = LightrailTransaction::createPending($params);
         $captureTransaction = $transaction->capture();
         $this->assertEquals('DRAWDOWN', $captureTransaction->transactionType);
 
         $refundTransaction = $captureTransaction->refund();
         $this->assertEquals('DRAWDOWN_REFUND', $refundTransaction->transactionType);
+    }
+
+    public function testTransactionWithMetadata()
+    {
+        $params             = $this->getBasicParams();
+        $params['value']    = 0;
+        $params['metadata'] = array('test' => array('nestedTest' => 'nestedTest'));
+
+        $transaction = LightrailTransaction::create($params);
+        $this->assertNotNull($transaction->metadata);
+        $this->assertEquals('nestedTest', $transaction->metadata['test']['nestedTest']);
     }
 }
