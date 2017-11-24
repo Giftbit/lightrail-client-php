@@ -53,7 +53,16 @@ class LightrailAccountTest extends TestCase
     public function testCreateTransactionByContactId()
     {
         $params             = $this->getBasicContactIdParams();
-        $params['contact']  = $params['contactId'];
+        $params['value']    = -1;
+        $accountTransaction = LightrailAccount::createTransaction($params);
+        $this->assertTrue(is_string($accountTransaction->transactionId));
+    }
+
+    public function testCreateTransactionByContactInsteadOfContactId()
+    {
+        $params            = $this->getBasicContactIdParams();
+        $params['contact'] = $params['contactId'];
+        unset($params['contactId']);
         $params['value']    = -1;
         $accountTransaction = LightrailAccount::createTransaction($params);
         $this->assertTrue(is_string($accountTransaction->transactionId));

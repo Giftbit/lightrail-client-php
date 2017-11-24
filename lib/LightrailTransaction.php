@@ -67,9 +67,10 @@ class LightrailTransaction extends LightrailObject
             unset($new_params['shopperId']);
             $card                 = LightrailContact::retrieveByShopperId($shopperId)->retrieveContactCardForCurrency($currency);
             $new_params['cardId'] = $card->cardId;
-        } elseif (isset($new_params['contact'])) {
-            $contactId = $new_params['contact'];
+        } elseif (isset($new_params['contact']) || isset($new_params['contactId'])) {
+            $contactId = self::getContactId($new_params);
             unset($new_params['contact']);
+            unset($new_params['contactId']);
             $card                 = LightrailContact::retrieveByContactId($contactId)->retrieveContactCardForCurrency($currency);
             $new_params['cardId'] = $card->cardId;
         }
@@ -151,5 +152,19 @@ class LightrailTransaction extends LightrailObject
         $new_params['currency'] = strtoupper($new_params['currency']);
 
         return $new_params;
+    }
+
+    private static function getContactId($params)
+    {
+        $newParams = $params;
+        if (isset($newParams['contactId']) && isset($newParams['contact']) && ($newParams['contactId'] != $newParams['contact'])) {
+            throw new BadParameterException('Must set only one of \'contactId\' or \'contact\' for transactions');
+        } elseif (isset($newParams['contact'])) {
+            $contactId = $newParams['contact'];
+        } else {
+            $contactId = $newParams['contactId'];
+        }
+
+        return $contactId;
     }
 }
