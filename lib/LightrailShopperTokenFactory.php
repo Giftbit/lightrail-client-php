@@ -4,29 +4,23 @@ namespace Lightrail;
 
 class LightrailShopperTokenFactory
 {
-
-    public static function generateForShopperId($shopperId, $validityInSeconds = 43200)
-    {
-        return LightrailShopperTokenFactory::generate(array('shi' => $shopperId), $validityInSeconds);
-    }
-
-    public static function generateForContactUserSuppliedId($userSuppliedId, $validityInSeconds = 43200)
-    {
-        return LightrailShopperTokenFactory::generate(array('cui' => $userSuppliedId), $validityInSeconds);
-    }
-
-    public static function generateForContactId($contactId, $validityInSeconds = 43200)
-    {
-        return LightrailShopperTokenFactory::generate(array('coi' => $contactId), $validityInSeconds);
-    }
-
-    private static function generate($g, $validityInSeconds = 43200)
+    public static function generate($contact, $validityInSeconds = 43200)
     {
         if (!isset(Lightrail::$apiKey)) {
             throw new Exceptions\BadParameterException("Lightrail.apiKey is not set.");
         }
         if (!isset(Lightrail::$sharedSecret)) {
             throw new Exceptions\BadParameterException('Lightrail.sharedSecret is not set.');
+        }
+
+        if (isset($contact['shopperId'])) {
+            $g = array('shi' => $contact['shopperId']);
+        } elseif (isset($contact['contactId'])) {
+            $g = array('coi' => $contact['contactId']);
+        } elseif (isset($contact['userSuppliedId'])) {
+            $g = array('cui' => $contact['userSuppliedId']);
+        } else {
+            throw new Exceptions\BadParameterException("contact must set one of: shopperId, contactId, userSuppliedId");
         }
 
         $payload = explode('.', Lightrail::$apiKey);
