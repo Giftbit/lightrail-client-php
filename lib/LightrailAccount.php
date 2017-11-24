@@ -9,6 +9,7 @@ class LightrailAccount extends LightrailObject
      */
     public static function create($params)
     {
+        Lightrail::checkAccountCardParams($params);
         if (isset($params['contactId'])) {
             $accountCard = LightrailCard::createAccountCardByContactId($params);
         } else {

@@ -37,16 +37,27 @@ class Lightrail
         }
     }
 
-    public static function checkAccountCardParamsByContactId($params)
+    public static function checkAccountCardParams($params)
     {
         self::checkApiKey();
 
         if ( ! isset($params['userSuppliedId'])) {
-            throw new Exceptions\BadParameterException('Card userSuppliedId not set.');
+            throw new Exceptions\BadParameterException('Account card userSuppliedId not set.');
         }
         if ( ! isset($params['currency'])) {
-            throw new Exceptions\BadParameterException('Card currency not set.');
+            throw new Exceptions\BadParameterException('Account currency not set.');
         }
+        if ( ! isset($params['contactId']) && ! isset($params['shopperId'])) {
+            throw new Exceptions\BadParameterException('Must set one of \'contactId\' or \'shopperId\' for account card creation.');
+        }
+        }
+
+    public static function checkAccountCardParamsByContactId($params)
+    {
+        self::checkApiKey();
+
+        self::checkAccountCardParams($params);
+
         if ( ! isset($params['contactId'])) {
             throw new Exceptions\BadParameterException('Contact ID not set.');
         }
@@ -56,12 +67,8 @@ class Lightrail
     {
         self::checkApiKey();
 
-        if ( ! isset($params['userSuppliedId'])) {
-            throw new Exceptions\BadParameterException('Card userSuppliedId not set.');
-        }
-        if ( ! isset($params['currency'])) {
-            throw new Exceptions\BadParameterException('Card currency not set.');
-        }
+        self::checkAccountCardParams($params);
+
         if ( ! isset($params['shopperId'])) {
             throw new Exceptions\BadParameterException('Shopper ID not set.');
         }
