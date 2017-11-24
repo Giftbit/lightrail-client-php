@@ -138,17 +138,18 @@ class LightrailTransaction extends LightrailObject
     private static function translateParametersFromStripe($params)
     {
         $new_params = $params;
-        if (isset($new_params['amount'])) {
+        if (isset($new_params['amount']) && ! isset($new_params['value'])) {
             $new_params['value'] = 0 - $new_params['amount'];
             unset($new_params['amount']);
         }
 
-        if (isset($new_params['idempotency-key'])) {
+        if (isset($new_params['idempotency-key']) && ! isset($new_params['userSuppliedId'])) {
             $new_params['userSuppliedId'] = $new_params['idempotency-key'];
             unset($new_params['userSuppliedId']);
         }
 
         $new_params['currency'] = strtoupper($new_params['currency']);
+
         return $new_params;
     }
 }
