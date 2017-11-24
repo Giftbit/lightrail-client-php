@@ -41,7 +41,7 @@ class LightrailTransaction extends LightrailObject
         }
 
 
-        if (!isset($params['cardId'])) {
+        if ( ! isset($params['cardId'])) {
             throw new Exceptions\BadParameterException('Must provide one of \'cardId\', \'contact\', or \'shopperId\'');
         }
         $cardId = $params['cardId'];
@@ -57,7 +57,7 @@ class LightrailTransaction extends LightrailObject
     {
         $new_params = $params;
 
-        if (!isset($new_params['currency'])) {
+        if ( ! isset($new_params['currency'])) {
             throw new Exceptions\BadParameterException('Must provide \'currency\'');
         }
         $currency = $new_params['currency'];
@@ -65,12 +65,12 @@ class LightrailTransaction extends LightrailObject
         if (isset($new_params['shopperId'])) {
             $shopperId = $new_params['shopperId'];
             unset($new_params['shopperId']);
-            $card = LightrailContact::retrieveByShopperId($shopperId)->retrieveContactCardForCurrency($currency);
+            $card                 = LightrailContact::retrieveByShopperId($shopperId)->retrieveContactCardForCurrency($currency);
             $new_params['cardId'] = $card->cardId;
         } elseif (isset($new_params['contact'])) {
             $contactId = $new_params['contact'];
             unset($new_params['contact']);
-            $card = LightrailContact::retrieveByContactId($contactId)->retrieveContactCardForCurrency($currency);
+            $card                 = LightrailContact::retrieveByContactId($contactId)->retrieveContactCardForCurrency($currency);
             $new_params['cardId'] = $card->cardId;
         }
 
@@ -110,7 +110,7 @@ class LightrailTransaction extends LightrailObject
         $endpoint = sprintf($endpoint, $this->cardId, $this->transactionId);
 
         $params ['userSuppliedId'] = ($this->userSuppliedId) . '-' . $action;
-        $response = json_decode(LightrailAPICall::post($endpoint, $params), true);
+        $response                  = json_decode(LightrailAPICall::post($endpoint, $params), true);
 
         return new LightrailTransaction($response, 'transaction');
     }
@@ -118,7 +118,7 @@ class LightrailTransaction extends LightrailObject
     public static function addDefaultUserSuppliedIdIfNotProvided($params)
     {
         $new_params = $params;
-        if (!isset($new_params['userSuppliedId'])) {
+        if ( ! isset($new_params['userSuppliedId'])) {
             $new_params['userSuppliedId'] = uniqid();
         }
 
@@ -128,7 +128,7 @@ class LightrailTransaction extends LightrailObject
     private static function addDefaultNSFIfNotProvided($params)
     {
         $new_params = $params;
-        if (!isset($new_params['nsf'])) {
+        if ( ! isset($new_params['nsf'])) {
             $new_params['nsf'] = false;
         }
 
