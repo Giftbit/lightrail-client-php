@@ -1,4 +1,6 @@
-# lightrail-client-php
+# Lightrail Client for PHP
+
+Proper documentation is on the TODO list.  :)
 
 ## Testing
 
