@@ -48,9 +48,7 @@ class Lightrail
             throw new Exceptions\BadParameterException('Account currency not set.');
         }
         if (!isset($params['contactId']) && !isset($params['shopperId'])) {
-            throw new Exceptions\BadParameterException(
-                'Must set one of \'contactId\' or \'shopperId\' for account card creation.'
-            );
+            throw new Exceptions\BadParameterException('Must set one of \'contactId\' or \'shopperId\' for account card creation.');
         }
     }
 
@@ -98,9 +96,7 @@ class Lightrail
             throw new Exceptions\BadParameterException('Transaction value not set.');
         }
         if (!isset($params['shopperId']) && !isset($params['contactId']) && !isset($params['contact'])) {
-            throw new Exceptions\BadParameterException(
-                'Must set one of \'shopperId\', \'contactId\', or \'contact\' for account transaction.'
-            );
+            throw new Exceptions\BadParameterException('Must set one of \'shopperId\', \'contactId\', or \'contact\' for account transaction.');
         }
     }
 }

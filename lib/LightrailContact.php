@@ -18,9 +18,7 @@ class LightrailContact extends LightrailObject
             && isset($params['shopperId'])
             && ($params['userSuppliedId'] != $params['shopperId'])
         ) {
-            throw new Exceptions\BadParameterException(
-                'Could not create contact: shopperId and userSuppliedId set to different values'
-            );
+            throw new Exceptions\BadParameterException('Could not create contact: shopperId and userSuppliedId set to different values');
         } elseif (!isset($params['userSuppliedId']) && isset($params['shopperId'])) {
             $params['userSuppliedId'] = $params['shopperId'];
         }
@@ -46,9 +44,7 @@ class LightrailContact extends LightrailObject
         if (isset($response['contacts'][0])) {
             $response = $response['contacts'][0];
         } else {
-            throw new Exceptions\ObjectNotFoundException(
-                'Could not find the Contact object for shopperId ' . $shopperId
-            );
+            throw new Exceptions\ObjectNotFoundException('Could not find the Contact object for shopperId ' . $shopperId);
         }
 
         return new LightrailContact($response);
@@ -65,9 +61,7 @@ class LightrailContact extends LightrailObject
         if (isset($response['cards'][0])) {
             $response = $response['cards'][0];
         } else {
-            throw new Exceptions\ObjectNotFoundException(
-                'Could not find a ' . $currency . ' Card for Contact ' . $this->contactId
-            );
+            throw new Exceptions\ObjectNotFoundException('Could not find a ' . $currency . ' Card for Contact ' . $this->contactId);
         }
 
         return new LightrailCard($response);
