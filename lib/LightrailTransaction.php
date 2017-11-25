@@ -16,17 +16,21 @@ class LightrailTransaction extends LightrailObject
 
     public static function simulate($params)
     {
-        return self::create($params, true);
+        return self::createImpl($params, true);
     }
 
     public static function createPending($params)
     {
         $params['pending'] = true;
-
-        return self::create($params, false);
+        return self::createImpl($params, false);
     }
 
-    public static function create($params, $simulate = false)
+    public static function create($params)
+    {
+        return self::createImpl($params, false);
+    }
+
+    private static function createImpl($params, $simulate = false)
     {
         Lightrail::checkApiKey();
         if ($simulate) {
