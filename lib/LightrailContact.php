@@ -26,7 +26,7 @@ class LightrailContact extends LightrailObject
         $endpoint = Lightrail::$API_BASE . self::$CONTACTS_ENDPOINT;
         $response = json_decode(LightrailAPICall::post($endpoint, $params), true);
 
-        return new LightrailCard($response, self::$JSON_ROOT_NAME);
+        return new LightrailContact($response, self::$JSON_ROOT_NAME);
     }
 
     public static function retrieveByContactId($contactId)

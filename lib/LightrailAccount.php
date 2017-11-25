@@ -7,9 +7,8 @@ class LightrailAccount extends LightrailObject
     /**
      * @params $params an Array with: contactId or shopperId; currency; and userSuppliedId for card
      */
-    public static function create($params)
+    public static function createAccountCard($params)
     {
-        Lightrail::checkAccountCardParams($params);
         if (isset($params['contactId'])) {
             $accountCard = self::createAccountCardByContactId($params);
         } elseif (isset($params['shopperId'])) {
@@ -30,9 +29,8 @@ class LightrailAccount extends LightrailObject
         try {
             return $contact->retrieveContactCardForCurrency($params['currency']);
         } catch (Exceptions\ObjectNotFoundException $e) {
-            $cardCreationParams = self::addAccountCardParams($params);
-
-            return self::create($cardCreationParams);
+            $cardCreationParams = self::addAccountCardParams($params, $contact);
+            return \Lightrail\LightrailCard::create($cardCreationParams);
         }
     }
 
@@ -49,17 +47,17 @@ class LightrailAccount extends LightrailObject
         try {
             return $contact->retrieveContactCardForCurrency($params['currency']);
         } catch (Exceptions\ObjectNotFoundException $e) {
-            $cardCreationParams = self::addAccountCardParams($params);
-            return self::create($cardCreationParams);
+            $cardCreationParams = self::addAccountCardParams($params, $contact);
+            return \Lightrail\LightrailCard::create($cardCreationParams);
         }
     }
 
-    // Helpers
-
-    private static function addAccountCardParams($params)
+    private static function addAccountCardParams($params, $contact)
     {
         $newParams = $params;
+        $newParams['contactId'] = $contact->contactId;
         $newParams['cardType'] = 'ACCOUNT_CARD';
+        return $newParams;
     }
 
     /**

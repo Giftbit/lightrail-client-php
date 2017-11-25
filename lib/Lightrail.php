@@ -29,7 +29,7 @@ class Lightrail
     public static function checkCardParams($params)
     {
         self::checkApiKey();
-        if (!isset($params['userSuppliedId'])) {
+        if (!(isset($params['cardType']) && $params['cardType'] == 'ACCOUNT_CARD') && !isset($params['userSuppliedId'])) {
             throw new Exceptions\BadParameterException('Card userSuppliedId not set.');
         }
         if (!isset($params['currency'])) {
