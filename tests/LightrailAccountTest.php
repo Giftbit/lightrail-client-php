@@ -50,6 +50,15 @@ class LightrailAccountTest extends TestCase
         $this->assertEquals('ACCOUNT_CARD', $accountCard->cardType);
     }
 
+    public function testCreateByNewShopperId()
+    {
+        $params      = $this->getBasicShopperIdParams();
+        $params['shopperId'] = uniqid();
+        $accountCard = LightrailAccount::create($params);
+        $this->assertTrue(is_string($accountCard->cardId));
+        $this->assertEquals('ACCOUNT_CARD', $accountCard->cardType);
+    }
+
     public function testCreateTransactionByContactId()
     {
         $params             = $this->getBasicContactIdParams();

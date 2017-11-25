@@ -39,20 +39,4 @@ class LightrailCardTest extends TestCase
 //		var_dump( $card );
 //		$this->assertEquals( 123, $card->initialValue );
 //	}
-
-    public function testCreateAccountCardByContactId()
-    {
-        $params = $this->getBasicParams();
-        $params['contactId'] = getEnv("CONTACT_ID");
-        $card = LightrailCard::createAccountCardByContactId($params);
-        $this->assertEquals('ACCOUNT_CARD', $card->cardType);
-    }
-
-    public function testCreateAccountCardByShopperId()
-    {
-        $params = $this->getBasicParams();
-        $params['shopperId'] = getEnv("SHOPPER_ID");
-        $card = LightrailCard::createAccountCardByShopperId($params);
-        $this->assertEquals('ACCOUNT_CARD', $card->cardType);
-    }
 }
