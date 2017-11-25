@@ -1,5 +1,5 @@
 {
-  "name": "lightrail/lightrail-client",
+  "name": "lightrail/lightrail",
   "description": "Client library for the Lightrail API (www.lightrail.com)",
   "keywords": [
     "lightrail",
