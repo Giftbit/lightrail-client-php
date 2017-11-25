@@ -1,7 +1,21 @@
 {
   "name": "lightrail/lightrail-client",
   "description": "Client library for the Lightrail API (www.lightrail.com)",
+  "keywords": [
+    "lightrail",
+    "payment processing",
+    "gift card",
+    "account credits"
+  ],
   "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Lightrail Integration Team",
+      "email": "tana.j@lightrail.com"
+    }
+  ],
+  "minimum-stability": "dev",
   "require": {
     "php": ">=5.5",
     "firebase/php-jwt": "^5.0"
@@ -11,14 +25,6 @@
     "vlucas/phpdotenv": "^2.5@dev",
     "squizlabs/php_codesniffer": "^3.0@dev"
   },
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Lightrail Integration Team",
-      "email": "tana.j@lightrail.com"
-    }
-  ],
-  "minimum-stability": "dev",
   "autoload": {
     "psr-4": {
       "Lightrail\\": "lib/"

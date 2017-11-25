@@ -5,7 +5,7 @@ namespace Lightrail;
 class LightrailAccount extends LightrailObject
 {
     /**
-     * @params $params Array including either contactId or shopperId; currency; and userSuppliedId for card
+     * @params $params an Array with: contactId or shopperId; currency; and userSuppliedId for card
      */
     public static function create($params)
     {
@@ -20,7 +20,7 @@ class LightrailAccount extends LightrailObject
     }
 
     /**
-     * @params $params Array including either contactId or shopperId; currency; value; and userSuppliedId for transaction
+     * @params $params an Array with: contactId or shopperId; currency; value; and userSuppliedId for transaction
      */
     public static function simulateTransaction($params)
     {
@@ -30,7 +30,7 @@ class LightrailAccount extends LightrailObject
     }
 
     /**
-     * @params $params Array including either contactId or shopperId; currency; value; and userSuppliedId for transaction
+     * @params $params an Array with: contactId or shopperId; currency; value; and userSuppliedId for transaction
      */
     public static function createTransaction($params)
     {

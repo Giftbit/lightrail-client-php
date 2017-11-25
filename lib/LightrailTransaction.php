@@ -43,7 +43,7 @@ class LightrailTransaction extends LightrailObject
         }
 
 
-        if ( ! isset($params['cardId'])) {
+        if (!isset($params['cardId'])) {
             throw new Exceptions\BadParameterException('Must provide one of \'cardId\', \'contact\', or \'shopperId\'');
         }
         $cardId = $params['cardId'];
@@ -59,7 +59,7 @@ class LightrailTransaction extends LightrailObject
     {
         $new_params = $params;
 
-        if ( ! isset($new_params['currency'])) {
+        if (!isset($new_params['currency'])) {
             throw new Exceptions\BadParameterException('Must provide \'currency\'');
         }
         $currency = $new_params['currency'];
@@ -67,13 +67,13 @@ class LightrailTransaction extends LightrailObject
         if (isset($new_params['shopperId'])) {
             $shopperId = $new_params['shopperId'];
             unset($new_params['shopperId']);
-            $card                 = LightrailContact::retrieveByShopperId($shopperId)->retrieveContactCardForCurrency($currency);
+            $card = LightrailContact::retrieveByShopperId($shopperId)->retrieveContactCardForCurrency($currency);
             $new_params['cardId'] = $card->cardId;
         } elseif (isset($new_params['contact']) || isset($new_params['contactId'])) {
             $contactId = self::translateContactIdIfPresent($new_params);
             unset($new_params['contact']);
             unset($new_params['contactId']);
-            $card                 = LightrailContact::retrieveByContactId($contactId)->retrieveContactCardForCurrency($currency);
+            $card = LightrailContact::retrieveByContactId($contactId)->retrieveContactCardForCurrency($currency);
             $new_params['cardId'] = $card->cardId;
         }
 
@@ -113,7 +113,7 @@ class LightrailTransaction extends LightrailObject
         $endpoint = sprintf($endpoint, $this->cardId, $this->transactionId);
 
         $params ['userSuppliedId'] = ($this->userSuppliedId) . '-' . $action;
-        $response                  = json_decode(LightrailAPICall::post($endpoint, $params), true);
+        $response = json_decode(LightrailAPICall::post($endpoint, $params), true);
 
         return new LightrailTransaction($response, 'transaction');
     }
@@ -121,7 +121,7 @@ class LightrailTransaction extends LightrailObject
     public static function addDefaultUserSuppliedIdIfNotProvided($params)
     {
         $new_params = $params;
-        if ( ! isset($new_params['userSuppliedId'])) {
+        if (!isset($new_params['userSuppliedId'])) {
             $new_params['userSuppliedId'] = uniqid();
         }
 
@@ -131,7 +131,7 @@ class LightrailTransaction extends LightrailObject
     private static function addDefaultNSFIfNotProvided($params)
     {
         $new_params = $params;
-        if ( ! isset($new_params['nsf'])) {
+        if (!isset($new_params['nsf'])) {
             $new_params['nsf'] = false;
         }
 
@@ -141,12 +141,12 @@ class LightrailTransaction extends LightrailObject
     private static function translateParametersFromStripe($params)
     {
         $new_params = $params;
-        if (isset($new_params['amount']) && ! isset($new_params['value'])) {
+        if (isset($new_params['amount']) && !isset($new_params['value'])) {
             $new_params['value'] = 0 - $new_params['amount'];
             unset($new_params['amount']);
         }
 
-        if (isset($new_params['idempotency-key']) && ! isset($new_params['userSuppliedId'])) {
+        if (isset($new_params['idempotency-key']) && !isset($new_params['userSuppliedId'])) {
             $new_params['userSuppliedId'] = $new_params['idempotency-key'];
             unset($new_params['userSuppliedId']);
         }
@@ -159,12 +159,17 @@ class LightrailTransaction extends LightrailObject
     private static function translateContactIdIfPresent($params)
     {
         $newParams = $params;
-        if (isset($newParams['contactId']) && isset($newParams['contact']) && ($newParams['contactId'] != $newParams['contact'])) {
+        if (isset($newParams['contactId'])
+            && isset($newParams['contact'])
+            && ($newParams['contactId'] != $newParams['contact'])
+        ) {
             throw new BadParameterException('Must set only one of \'contactId\' or \'contact\' for transactions');
         } elseif (isset($newParams['contact'])) {
             $contactId = $newParams['contact'];
         } elseif (isset($newParams['contactId'])) {
             $contactId = $newParams['contactId'];
+        } else {
+            throw new BadParameterException('Must set one of \'contact\' or \'contactId\' for transactions');
         }
 
         return $contactId;
