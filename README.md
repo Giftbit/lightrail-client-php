@@ -21,7 +21,7 @@ For a sample project using this library, check out the [Lightrail Stripe Sample 
 
 ### Configuration
 
-Before using this client, you'll need to configure it to use your API key:
+Before using this client, you'll need to configure it to use your API key. You can find this in the Lightrail web app -- go to your [account settings](https://www.lightrail.com/app/#/account/profile), then click 'API keys' and 'Generate Key.'
 
 ```php
 \Lightrail\Lightrail::$apiKey = <LIGHTRAIL_API_KEY>;
@@ -33,10 +33,8 @@ Before using this client, you'll need to configure it to use your API key:
 ### Composer
 
 You can add this library as a dependency to your project using `composer`:
-```json
-"require": {
-    "lightrail/lightrail-stripe": "dev-master"
-  }
+```
+composer require lightrail/lightrail
 ```
 
 
