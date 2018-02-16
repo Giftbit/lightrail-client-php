@@ -52,9 +52,9 @@ class LightrailAccountTest extends TestCase
 
     public function testCreateByNewShopperId()
     {
-        $params      = $this->getBasicShopperIdParams();
+        $params              = $this->getBasicShopperIdParams();
         $params['shopperId'] = uniqid();
-        $accountCard = LightrailAccount::createAccountCard($params);
+        $accountCard         = LightrailAccount::createAccountCard($params);
         $this->assertTrue(is_string($accountCard->cardId));
         $this->assertEquals('ACCOUNT_CARD', $accountCard->cardType);
     }
@@ -92,6 +92,7 @@ class LightrailAccountTest extends TestCase
         $params['value']    = -1;
         $accountTransaction = LightrailAccount::simulateTransaction($params);
         $this->assertTrue(is_string($accountTransaction->transactionType));
+        $this->assertEquals(null, $accountTransaction->transactionId);
     }
 
     public function testSimulateTransactionByShopperId()
@@ -100,6 +101,17 @@ class LightrailAccountTest extends TestCase
         $params['value']    = -1;
         $accountTransaction = LightrailAccount::simulateTransaction($params);
         $this->assertTrue(is_string($accountTransaction->transactionType));
+        $this->assertEquals(null, $accountTransaction->transactionId);
+    }
+
+    public function testSimulateTransactionWithNsfFalse()
+    {
+        $params             = $this->getBasicShopperIdParams();
+        $params['value']    = -1000000000000000;
+        $params['nsf']      = false;
+        $accountTransaction = LightrailAccount::simulateTransaction($params);
+        $this->assertTrue(is_string($accountTransaction->transactionType));
+        $this->assertEquals(null, $accountTransaction->transactionId);
     }
 
 }
