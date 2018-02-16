@@ -9,25 +9,33 @@ $dotenv->load();
 
 use PHPUnit\Framework\TestCase;
 
-class LightrailCardTest extends TestCase
+class LightrailCardAndProgramTest extends TestCase
 {
     public static function setUpBeforeClass()
     {
         Lightrail::$apiKey = getEnv("LIGHTRAIL_API_KEY");
     }
 
-    public function getBasicParams()
-    {
-        return array(
-            'userSuppliedId' => uniqid(),
-            'currency' => 'USD',
-        );
-    }
-
     public function testCreateCard()
     {
-        $params = $this->getBasicParams();
-        $card = LightrailCard::create($params);
+        $programParams = array(
+            'userSuppliedId' => uniqid(),
+            'currency' => 'USD',
+            'name' => 'php library unit test program',
+            'valueStoreType' => 'PRINCIPAL',
+            'codeValueMin' => 10,
+            'codeValueMax' => 1000
+        );
+        $program = LightrailProgram::create($programParams);
+        $this->assertTrue((is_string($program->programId)));
+
+        $cardParams = array(
+            'userSuppliedId' => uniqid(),
+            'currency' => 'USD',
+            'programId' => $program->programId,
+            'initialValue' => 100
+        );
+        $card = LightrailCard::create($cardParams);
         $this->assertTrue((is_string($card->cardId)));
     }
 

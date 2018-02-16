@@ -99,4 +99,18 @@ class Lightrail
             throw new Exceptions\BadParameterException('Must set one of \'shopperId\', \'contactId\', or \'contact\' for account transaction.');
         }
     }
+
+    public static function checkProgramParams($params)
+    {
+        self::checkApiKey();
+        if (!isset($params['userSuppliedId'])) {
+            throw new Exceptions\BadParameterException('Program userSuppliedId not set.');
+        }
+        if (!isset($params['currency'])) {
+            throw new Exceptions\BadParameterException('Program currency not set.');
+        }
+        if (!isset($params['valueStoreType'])) {
+            throw new Exceptions\BadParameterException('Program valueStoreType not set.');
+        }
+    }
 }

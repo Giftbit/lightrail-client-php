@@ -13,6 +13,7 @@ class LightrailAPICall
             'Content-Type: application/json'
         ));
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_USERAGENT, 'Lightrail-PHP');
 
         return $curl;
     }
