@@ -6,8 +6,8 @@ class LightrailShopperTokenFactory
 {
     public static function generate($contact, $validityInSeconds = 43200)
     {
-        if (!isset(Lightrail::$apiKey)) {
-            throw new Exceptions\BadParameterException("Lightrail.apiKey is not set.");
+        if ( ! isset(Lightrail::$apiKey) || empty(Lightrail::$apiKey)) {
+            throw new Exceptions\BadParameterException("Lightrail.apiKey is empty or not set.");
         }
         if (!isset(Lightrail::$sharedSecret)) {
             throw new Exceptions\BadParameterException('Lightrail.sharedSecret is not set.');

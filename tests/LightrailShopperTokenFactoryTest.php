@@ -60,4 +60,14 @@ class LightrailShopperTokenFactoryTest extends TestCase
         $this->assertEquals($shopperPayload->iat + 600, $shopperPayload->exp, "exp = iat + 600");
     }
 
+    public function testThrowsExceptionIfApiKeyEmpty()
+    {
+        Lightrail::$apiKey       = "";
+        Lightrail::$sharedSecret = "secret";
+
+        $this->expectException(\Exception::class);
+
+        LightrailShopperTokenFactory::generate(array("contactId" => "chauntaktEyeDee"), 600);
+    }
+
 }
