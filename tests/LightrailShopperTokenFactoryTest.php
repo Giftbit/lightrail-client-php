@@ -70,4 +70,14 @@ class LightrailShopperTokenFactoryTest extends TestCase
         LightrailShopperTokenFactory::generate(array("contactId" => "chauntaktEyeDee"), 600);
     }
 
+    public function testThrowsExceptionIfSharedSecretEmpty()
+    {
+        Lightrail::$apiKey       = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8";
+        Lightrail::$sharedSecret = "";
+
+        $this->expectException(\Exception::class);
+
+        LightrailShopperTokenFactory::generate(array("contactId" => "chauntaktEyeDee"), 600);
+    }
+
 }

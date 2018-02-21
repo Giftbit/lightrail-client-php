@@ -9,7 +9,7 @@ class LightrailShopperTokenFactory
         if ( ! isset(Lightrail::$apiKey) || empty(Lightrail::$apiKey)) {
             throw new Exceptions\BadParameterException("Lightrail.apiKey is empty or not set.");
         }
-        if (!isset(Lightrail::$sharedSecret)) {
+        if ( ! isset(Lightrail::$sharedSecret) || empty(Lightrail::$sharedSecret)) {
             throw new Exceptions\BadParameterException('Lightrail.sharedSecret is not set.');
         }
 
