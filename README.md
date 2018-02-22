@@ -190,9 +190,9 @@ The response will be similar to the following. Note that this is just a simulati
 
 ### Shopper Tokens
 
-If you are using our [Drop In Gift Card](https://www.lightrail.com/docs/#drop-in-gift-cards/quickstart) solution, you can use this library to generate shopper tokens for transacting against a customer's account. 
+If you are using our [Drop-in Gift Card](https://www.lightrail.com/docs/#drop-in-gift-cards/quickstart) solution, you can use this library to generate shopper tokens for transacting against a customer's account. 
 
-A shopper token is generated from a a unique customer identifier from your system: this is the same `shopperId` or contact `userSuppliedId` you would have used when creating the Contact. If you haven't yet created a Contact record, the function will create one for you automatically based on this ID. (Note that if you want extra information to be associated with the Contact, like their name or email address, you should [create the contact](#handling-contacts) first.)
+A shopper token is generated from a unique customer identifier from your system: this is the same `shopperId` or contact `userSuppliedId` you would have used when creating the Contact. If you haven't yet created a Contact record, the function will create one for you automatically based on this ID. (Note that if you want extra information to be associated with the Contact, like their name or email address, you should [create the contact](#handling-contacts) first.)
 
 ```php
 \Lightrail\LightrailShopperTokenFactory::generate(array('shopperId' => 'cust-a95a09'));
