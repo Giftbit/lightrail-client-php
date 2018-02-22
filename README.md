@@ -55,7 +55,7 @@ $contactParams = array(
     'shopperId' => 'cust-a95a09',
     'email' => 'test@test.com'
 );
-$contact = LightrailContact::create($params);
+$contact = \Lightrail\LightrailContact::create($params);
 ```
 
 The return value will be a `LightrailContact` object, which will include both the `shopperId` you provided (as `userSuppliedId`) and a server-generated `contactId`. You can choose to save either value to retrieve the contact later:
