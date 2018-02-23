@@ -192,10 +192,11 @@ The response will be similar to the following. Note that this is just a simulati
 
 If you are using our [Drop-in Gift Card](https://www.lightrail.com/docs/#drop-in-gift-cards/quickstart) solution, you can use this library to generate shopper tokens for transacting against a customer's account. 
 
-A shopper token is generated from a unique customer identifier from your system: this is the same `shopperId` or contact `userSuppliedId` you would have used when creating the Contact. If you haven't yet created a Contact record, the function will create one for you automatically based on this ID. (Note that if you want extra information to be associated with the Contact, like their name or email address, you should [create the contact](#handling-contacts) first.)
+A shopper token is generated from a unique customer identifier from your system: this is the same `shopperId` or contact `userSuppliedId` you would have used when creating the Contact, or you can also use the Lightrail-generated `contactId` that comes back in the response when a Contact is created. 
 
 ```php
 \Lightrail\LightrailShopperTokenFactory::generate(array('shopperId' => 'cust-a95a09'));
+\Lightrail\LightrailShopperTokenFactory::generate(array('contactId' => 'contact-0s459jy6h56'));
 ```
 
 You can also pass in an optional second argument specifying the token's validity in seconds: 
@@ -203,6 +204,8 @@ You can also pass in an optional second argument specifying the token's validity
 ```php
 \Lightrail\LightrailShopperTokenFactory::generate(array('shopperId' => 'cust-a95a09', 600));
 ```
+
+Note that if you haven't yet created a Contact record, some functions that use the generated shopper token will create one for you automatically based solely on the `shopperId` you provide - ie Account creation. If you want extra information to be associated with the Contact, like their name or email address, you should [create the contact](#handling-contacts) first.
 
 
 ## Testing
