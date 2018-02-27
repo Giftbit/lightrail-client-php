@@ -24,6 +24,9 @@ class Lightrail
         if (!isset(self::$apiKey)) {
             throw new Exceptions\BadParameterException('Lightrail::$apiKey not set.');
         }
+        if (empty(self::$apiKey)) {
+            throw new Exceptions\BadParameterException('Lightrail::$apiKey is empty.');
+        }
     }
 
     public static function checkCardParams($params)
