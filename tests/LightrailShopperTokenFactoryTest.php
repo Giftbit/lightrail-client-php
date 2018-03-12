@@ -24,6 +24,7 @@ class LightrailShopperTokenFactoryTest extends TestCase
         $this->assertEquals("gooey", $shopperPayload->g->gui, "g.gui");
         $this->assertEquals("germie", $shopperPayload->g->gmi, "g.gmi");
         $this->assertEquals("MERCHANT", $shopperPayload->iss, "iss");
+        $this->assertObjectNotHasAttribute("metadata", $shopperPayload);
         $this->assertGreaterThan(0, $shopperPayload->iat, "iat is a number > 0");
         $this->assertEquals($shopperPayload->iat + 600, $shopperPayload->exp, "exp = iat + 600");
     }
@@ -40,6 +41,7 @@ class LightrailShopperTokenFactoryTest extends TestCase
         $this->assertEquals("gooey", $shopperPayload->g->gui, "g.gui");
         $this->assertEquals("germie", $shopperPayload->g->gmi, "g.gmi");
         $this->assertEquals("MERCHANT", $shopperPayload->iss, "iss");
+        $this->assertObjectNotHasAttribute("metadata", $shopperPayload);
         $this->assertGreaterThan(0, $shopperPayload->iat, "iat is a number > 0");
         $this->assertEquals($shopperPayload->iat + 600, $shopperPayload->exp, "exp = iat + 600");
     }
@@ -56,8 +58,29 @@ class LightrailShopperTokenFactoryTest extends TestCase
         $this->assertEquals("gooey", $shopperPayload->g->gui, "g.gui");
         $this->assertEquals("germie", $shopperPayload->g->gmi, "g.gmi");
         $this->assertEquals("MERCHANT", $shopperPayload->iss, "iss");
+        $this->assertObjectNotHasAttribute("metadata", $shopperPayload);
         $this->assertGreaterThan(0, $shopperPayload->iat, "iat is a number > 0");
         $this->assertEquals($shopperPayload->iat + 600, $shopperPayload->exp, "exp = iat + 600");
+    }
+
+    public function testSignsMetadata()
+    {
+        Lightrail::$apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8";
+        Lightrail::$sharedSecret = "secret";
+
+        $shopperTokenOptions = array("metadata" => array("foo" => "bar"));
+        $shopperToken = LightrailShopperTokenFactory::generate(array("contactId" => "chauntaktEyeDee"), $shopperTokenOptions);
+        $shopperPayload = \Firebase\JWT\JWT::decode($shopperToken, Lightrail::$sharedSecret, array('HS256'));
+
+        $this->assertEquals("chauntaktEyeDee", $shopperPayload->g->coi, "g.coi");
+        $this->assertEquals("gooey", $shopperPayload->g->gui, "g.gui");
+        $this->assertEquals("germie", $shopperPayload->g->gmi, "g.gmi");
+        $this->assertEquals("MERCHANT", $shopperPayload->iss, "iss");
+        $this->assertObjectHasAttribute("metadata", $shopperPayload);
+        $this->assertObjectHasAttribute("foo", $shopperPayload->metadata);
+        $this->assertEquals("bar", $shopperPayload->metadata->foo);
+        $this->assertGreaterThan(0, $shopperPayload->iat, "iat is a number > 0");
+        $this->assertGreaterThan(0, $shopperPayload->exp, "exp is a number > 0");
     }
 
     public function testThrowsExceptionIfApiKeyEmpty()
