@@ -1,6 +1,6 @@
 # Lightrail Client for PHP
 
-This client is for Lightrail v1.  If you're not sure what that is you probably want [the v2 library](https://github.com/Giftbit/lightrail-client-php-v2).
+This client is for Lightrail v1.  If you're not sure what that is you probably want [the v2 library lightrail-client-php-v2](https://github.com/Giftbit/lightrail-client-php-v2).
 
 
 ## Features
